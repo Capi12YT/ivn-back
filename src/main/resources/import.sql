@@ -1,0 +1,1 @@
+INSERT into usuarios VALUES (0,'admin','Jesus','Capitan','$2a$10$yp1fxi5XMw.lF6lCX8Xuve2iq/DoEaK2zNaOnrp.S2zLrsiQSgXJG','admin');
