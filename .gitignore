@@ -5,6 +5,10 @@ pom.xml.releaseBackup
 pom.xml.versionsBackup
 release.properties
 
+target/
+.settings/
+.mvn/
+
 # Eclipse
 .project
 .classpath
