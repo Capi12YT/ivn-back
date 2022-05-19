@@ -28,7 +28,7 @@ import org.jcapitan.es.ivn.model.Viaje;
 import org.jcapitan.es.ivn.services.UsuarioService;
 
 
-@Path("/Users")
+@Path("/api/Users")
 public class UsuarioController {
 
 	@Inject

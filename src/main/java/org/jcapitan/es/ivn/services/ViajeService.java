@@ -7,7 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 import org.jcapitan.es.ivn.dto.ViajeDTO;
 import org.jcapitan.es.ivn.dto.ViajeDTOe;
 import org.jcapitan.es.ivn.mappers.ViajeMappers;
-import org.jcapitan.es.ivn.model.Usuario;
+import org.jcapitan.es.ivn.model.Reserva;
 import org.jcapitan.es.ivn.model.Viaje;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
@@ -33,13 +33,19 @@ public class ViajeService implements PanacheRepository<Viaje> {
 	}
 
 	public boolean deleteViaje(Long id) {
+		Viaje viaje = Viaje.findById(id);
+		
+		
+		viaje.reservas.forEach(reserva -> {
+			Reserva.delete("id", reserva.id);
+		});
+		
 		Long numeroViaje= Viaje.delete("id", id);
 		if(numeroViaje > 0) {
 			return true;			
 		}else {
 			return false;
 		}
-		
 	}
 
 	public Viaje viajeById(Long id) {

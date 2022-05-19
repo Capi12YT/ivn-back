@@ -28,7 +28,7 @@ import org.jcapitan.es.ivn.model.Acontecimiento;
 import org.jcapitan.es.ivn.model.Viaje;
 import org.jcapitan.es.ivn.services.ViajeService;
 
-@Path("/Viaje")
+@Path("/api/Viaje")
 public class ViajeController {
 	   
 		@Inject
@@ -67,9 +67,9 @@ public class ViajeController {
 			List<Viaje> viajes = viajeService.viajeAll();
 			int numViajes = viajes.size();
 			List<Viaje> lastViajes = new ArrayList<Viaje>();
-			lastViajes.add(viajes.get(numViajes-1));
-			lastViajes.add(viajes.get(numViajes-2));
-			lastViajes.add(viajes.get(numViajes-3));
+			if (numViajes > 0 ) lastViajes.add(viajes.get(numViajes-1));
+			if (numViajes > 1 ) lastViajes.add(viajes.get(numViajes-2));
+			if (numViajes > 2 ) lastViajes.add(viajes.get(numViajes-3));
 			List<ViajeDTOr> viajeDTOr = new ArrayList<ViajeDTOr>();
 			viajeDTOr = lastViajes.stream().map( vj -> ViajeMappers.viajeToViajeDTO(vj)).collect(Collectors.toList());
 			return  viajeDTOr;

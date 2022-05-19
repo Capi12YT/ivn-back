@@ -13,7 +13,7 @@ import javax.ws.rs.core.MediaType;
 import org.jcapitan.es.ivn.model.Contadores;
 import org.jcapitan.es.ivn.services.ContadorService;
 
-@Path("/Contadores")
+@Path("/api/Contadores")
 public class ContadoresController {
 
 	@Inject

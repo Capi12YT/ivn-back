@@ -22,7 +22,7 @@ import org.jcapitan.es.ivn.model.Reserva;
 import org.jcapitan.es.ivn.services.ReservaService;
 
 
-@Path("/Reserva")
+@Path("/api/Reserva")
 public class ReservasController {
 	@Inject
 	ReservaService reservaService;
@@ -80,4 +80,13 @@ public class ReservasController {
 
 		return Response.ok(done?"Reserva borrada:"+ reservas.size():"Reserva no borrada").status(done?201:200).build();
 	}
+	
+	@DELETE
+	@Path("All/Delete/{userId}")
+	@Transactional
+	public Response deleteAllReserva(@PathParam("userId") Long userId) {
+		Long reservas=reservaService.deleteAllReserva(userId);
+		return Response.ok(reservas==0?"Reservas borrada:"+ reservas:"Reservas no borrada").status(reservas==0?201:200).build();
+	}
+	
 }

@@ -23,7 +23,7 @@ import org.jcapitan.es.ivn.model.Acontecimiento;
 import org.jcapitan.es.ivn.model.Reserva;
 import org.jcapitan.es.ivn.services.AcontecimientoService;
 
-@Path("/Acontecimiento")
+@Path("/api/Acontecimiento")
 public class AcontecimientoController {
 	@Inject
 	AcontecimientoService acontecimientoService;

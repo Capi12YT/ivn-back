@@ -10,7 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -25,7 +24,8 @@ public class Viaje extends PanacheEntity {
 	public String vi_description;
 	public boolean vi_estado; //oferta o no
 	public float vi_price;
-	@Column(columnDefinition = "LONGBLOB")
+
+	@Column(columnDefinition="TEXT")
 	public String vi_img;
 	
 	@OneToMany(mappedBy = "viaje", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

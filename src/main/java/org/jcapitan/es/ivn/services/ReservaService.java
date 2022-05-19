@@ -39,4 +39,15 @@ public class ReservaService implements PanacheRepository<Reserva> {
 		return false;
 	}
 	
+	public long deleteAllReserva(Long userId) {
+		List<Reserva> reservasByUser = Reserva.list("usuario_id", userId);
+		reservasByUser.forEach(reserva -> {
+			Reserva.delete("id", reserva.id);
+		});
+		reservasByUser = Reserva.list("usuario_id", userId);
+		return reservasByUser.size();
+
+
+	}
+	
 }
