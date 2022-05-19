@@ -15,7 +15,6 @@
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
     <quarkus.platform.version>2.7.5.Final</quarkus.platform.version>
     <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
-    <java.version>11</java.version>
 
   </properties>
   <dependencyManagement>
@@ -123,6 +122,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>${compiler-plugin.version}</version>
         <configuration>
+                        <release>11</release>
+
           <compilerArgs>
             <arg>-parameters</arg>
           </compilerArgs>
