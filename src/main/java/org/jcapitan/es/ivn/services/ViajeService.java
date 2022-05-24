@@ -1,9 +1,11 @@
 package org.jcapitan.es.ivn.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.enterprise.context.ApplicationScoped;
 
+import org.jcapitan.es.ivn.dto.FiltroViajeDTO;
 import org.jcapitan.es.ivn.dto.ViajeDTO;
 import org.jcapitan.es.ivn.dto.ViajeDTOe;
 import org.jcapitan.es.ivn.mappers.ViajeMappers;
@@ -65,5 +67,28 @@ public class ViajeService implements PanacheRepository<Viaje> {
 		Viaje.persist(viajeBD);
 		return true;
 	}
+	
+	public List<Viaje> viajeFiltre(FiltroViajeDTO filtroViajeDTO){
+		
+		List<Viaje> viajes = viajeFiltreAcontecimiento(filtroViajeDTO.getAcontecimiento());
+
+		List<Viaje> viajesFiltrados = viajes.stream()
+		    .filter(viaje -> filtroViajeDTO.getNombre() == "" || viaje.vi_name.contains(filtroViajeDTO.getNombre()) )
+		    .filter(viaje -> filtroViajeDTO.getLocalizacion() == "" || filtroViajeDTO.getLocalizacion().equals(viaje.vi_location) )
+		    .filter( viaje -> filtroViajeDTO.isEstado() == false || !(filtroViajeDTO.isEstado() && !viaje.vi_estado) )
+		    .collect(Collectors.toList());
+		
+		return viajesFiltrados;
+	}
+
+	public List<Viaje> viajeFiltreAcontecimiento(String acontecimiento) {
+		List<Viaje> viajes = Viaje.listAll();
+		List<Viaje> viajesFiltrados = viajes.stream()
+			    .filter(viaje -> viaje.acontecimiento.ev_acont_name.equals(acontecimiento) )
+			    .collect(Collectors.toList());
+		return viajesFiltrados;
+	}
+
+	
 	
 }

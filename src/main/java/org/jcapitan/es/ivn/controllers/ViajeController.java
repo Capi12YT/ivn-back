@@ -18,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.jcapitan.es.ivn.dto.AcontecimientoDTO;
+import org.jcapitan.es.ivn.dto.FiltroViajeDTO;
 import org.jcapitan.es.ivn.dto.UsuarioDTO;
 import org.jcapitan.es.ivn.dto.ViajeDTO;
 import org.jcapitan.es.ivn.dto.ViajeDTOe;
@@ -39,7 +40,7 @@ public class ViajeController {
 		@Path("Create")
 		@Transactional
 		@Consumes(MediaType.APPLICATION_JSON)
-		public Response createZap(ViajeDTO viaje) {
+		public Response createViaje(ViajeDTO viaje) {
 			boolean created = false;
 			created = viajeService.createViaje(viaje);
 
@@ -101,5 +102,29 @@ public class ViajeController {
 			ViajeDTOr viajeDTOr = ViajeMappers.viajeToViajeDTO(viaje);
 			return  viajeDTOr;
 		}
+		
+		@POST
+		@Path("Filter")
+		@Transactional
+		@Consumes(MediaType.APPLICATION_JSON)
+		@Produces(MediaType.APPLICATION_JSON)
+		public List<ViajeDTOr> filtreViaje(FiltroViajeDTO filtroViajeDTO) {
+			List<Viaje> viajesFiltrados = viajeService.viajeFiltre(filtroViajeDTO);
+			List<ViajeDTOr> viajeDTOr = viajesFiltrados.stream().map( vj -> ViajeMappers.viajeToViajeDTO(vj)).collect(Collectors.toList());
+			return  viajeDTOr;
+		}
+		
+		@POST
+		@Path("Filter/Acontecimiento")
+		@Transactional
+		@Consumes(MediaType.APPLICATION_JSON)
+		@Produces(MediaType.APPLICATION_JSON)
+		public List<ViajeDTOr> filtreAcontecimientoViaje(FiltroViajeDTO filtroViajeDTO) {
+			List<Viaje> viajesFiltrados = viajeService.viajeFiltreAcontecimiento(filtroViajeDTO.getAcontecimiento());
+			List<ViajeDTOr> viajesDTOr = viajesFiltrados.stream().map( vj -> ViajeMappers.viajeToViajeDTO(vj)).collect(Collectors.toList());
+			return  viajesDTOr;
+		}
+		
+		
 	}
 
