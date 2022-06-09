@@ -4,30 +4,33 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.jcapitan.es.ivn.dto.AcontecimientoDTO;
 import org.jcapitan.es.ivn.dto.FiltroViajeDTO;
-import org.jcapitan.es.ivn.dto.UsuarioDTO;
 import org.jcapitan.es.ivn.dto.ViajeDTO;
 import org.jcapitan.es.ivn.dto.ViajeDTOe;
 import org.jcapitan.es.ivn.dto.ViajeDTOr;
-import org.jcapitan.es.ivn.mappers.AcontecimientoMappers;
+import org.jcapitan.es.ivn.dto.ViajesPaginadoDTO;
 import org.jcapitan.es.ivn.mappers.ViajeMappers;
-import org.jcapitan.es.ivn.model.Acontecimiento;
 import org.jcapitan.es.ivn.model.Viaje;
 import org.jcapitan.es.ivn.services.ViajeService;
+
+import io.quarkus.panache.common.Page;
+
 
 @Path("/api/Viaje")
 public class ViajeController {
@@ -59,6 +62,26 @@ public class ViajeController {
 			viajeDTOr = viajes.stream().map( vj -> ViajeMappers.viajeToViajeDTO(vj)).collect(Collectors.toList());
 			return  viajeDTOr;
 		}
+		
+		
+		
+		@GET
+		@Path("Pagination")
+		@Transactional
+		@Produces(MediaType.APPLICATION_JSON)
+		public ViajesPaginadoDTO viajeAllPage(@QueryParam("page") @DefaultValue("0") int pageIndex){
+			
+	        int pageSize = 3;
+			
+			List<Viaje> viajes = viajeService.viajeAllPage(pageIndex,pageSize);
+			List<ViajeDTOr> viajeDTOr = viajes.stream().map( vj -> ViajeMappers.viajeToViajeDTO(vj)).collect(Collectors.toList());
+		
+			ViajesPaginadoDTO viajesPaginadoDTO = new ViajesPaginadoDTO(viajeDTOr, Viaje.count());
+			
+			return  viajesPaginadoDTO;
+		}
+		
+
 		
 		@GET
 		@Path("Last")

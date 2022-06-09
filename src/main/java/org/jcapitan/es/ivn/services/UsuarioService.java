@@ -9,6 +9,7 @@ import org.apache.sshd.common.config.keys.loader.openssh.kdf.BCrypt;
 import org.jcapitan.es.ivn.dto.UsuarioDTO;
 import org.jcapitan.es.ivn.mappers.UsuarioMappers;
 import org.jcapitan.es.ivn.model.Usuario;
+import org.jcapitan.es.ivn.model.Viaje;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
@@ -99,5 +100,18 @@ public class UsuarioService implements PanacheRepository<Usuario> {
 		usuarioBD.us_password=BCrypt.hashpw(usuarioDTO.getPassword(), BCrypt.gensalt());
 		Usuario.persist(usuarioBD);
 		return true;
+	}
+
+	public List<Usuario> usuarioAllPage(int pageIndex, int pageSize) {
+		List<Usuario> usuarios = getSortAdmins();
+		int numItems = usuarios.size();
+		int from = (pageIndex-1) * pageSize;
+		int to = pageIndex * pageSize;
+		if (from > numItems - 1) from = numItems - 1;
+		if (to > numItems - 1) to = numItems;
+		
+		List<Usuario> subUsuarios  = usuarios.subList(from , to);
+		
+		return subUsuarios;
 	}
 }

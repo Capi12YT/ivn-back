@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 
-
+import org.jcapitan.es.ivn.model.Acontecimiento;
 import org.jcapitan.es.ivn.model.Reserva;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
@@ -48,6 +48,19 @@ public class ReservaService implements PanacheRepository<Reserva> {
 		return reservasByUser.size();
 
 
+	}
+
+	public List<Reserva> reservaAllPage(int pageIndex, int pageSize) {
+		List<Reserva> reservas = Reserva.listAll();
+		int numItems = reservas.size();
+		int from = (pageIndex-1) * pageSize;
+		int to = pageIndex * pageSize;
+		if (from > numItems - 1) from = numItems - 1;
+		if (to > numItems - 1) to = numItems;
+		
+		List<Reserva> subReserva  = reservas.subList(from , to);
+		
+		return subReserva;
 	}
 	
 }

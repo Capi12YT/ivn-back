@@ -8,19 +8,26 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.jcapitan.es.ivn.dto.AcontecimientoDTO;
+import org.jcapitan.es.ivn.dto.AcontecimientoPaginadoDTO;
 import org.jcapitan.es.ivn.dto.UsuarioDTO;
+import org.jcapitan.es.ivn.dto.ViajeDTOr;
+import org.jcapitan.es.ivn.dto.ViajesPaginadoDTO;
 import org.jcapitan.es.ivn.mappers.AcontecimientoMappers;
+import org.jcapitan.es.ivn.mappers.ViajeMappers;
 import org.jcapitan.es.ivn.model.Acontecimiento;
 import org.jcapitan.es.ivn.model.Reserva;
+import org.jcapitan.es.ivn.model.Viaje;
 import org.jcapitan.es.ivn.services.AcontecimientoService;
 
 @Path("/api/Acontecimiento")
@@ -42,6 +49,28 @@ public class AcontecimientoController {
 
 		return acontecimientoDTO;
 	}
+	
+	
+	@GET
+	@Path("Pagination")
+	@Transactional
+	@Produces(MediaType.APPLICATION_JSON)
+	public AcontecimientoPaginadoDTO acontecimientoAllPage(@QueryParam("page") @DefaultValue("0") int pageIndex){
+		
+        int pageSize = 3;
+		
+		List<Acontecimiento> acontecimientos = acontecimientoService.acontecimientoAllPage(pageIndex,pageSize);
+		List<AcontecimientoDTO> acontecimientoDTO = acontecimientos.stream().map( ac -> AcontecimientoMappers.acontecimientoToAcontecimientoDTO(ac)).collect(Collectors.toList());
+	
+		AcontecimientoPaginadoDTO acontecimientoPaginadoDTO = new AcontecimientoPaginadoDTO(acontecimientoDTO, Acontecimiento.count());
+		
+		return  acontecimientoPaginadoDTO;
+	}
+	
+	
+	
+	
+	
 	
 	@POST
 	@Path("Create")

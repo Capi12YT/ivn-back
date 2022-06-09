@@ -30,4 +30,18 @@ public class AcontecimientoService implements PanacheRepository<Acontecimiento> 
 	public boolean deleteAcon(Long id) {
 		return Acontecimiento.deleteById(id);
 	}
+
+	public List<Acontecimiento> acontecimientoAllPage(int pageIndex, int pageSize) {
+		
+		List<Acontecimiento> acontecimientos = Acontecimiento.listAll();
+		int numItems = acontecimientos.size();
+		int from = (pageIndex-1) * pageSize;
+		int to = pageIndex * pageSize;
+		if (from > numItems - 1) from = numItems - 1;
+		if (to > numItems - 1) to = numItems;
+		
+		List<Acontecimiento> subAcontecimiento  = acontecimientos.subList(from , to);
+		
+		return subAcontecimiento;
+	}
 }

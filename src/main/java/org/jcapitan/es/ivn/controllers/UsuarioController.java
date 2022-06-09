@@ -8,23 +8,22 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.jboss.logging.annotations.Param;
+
 import org.jcapitan.es.ivn.dto.UsuarioDTO;
-import org.jcapitan.es.ivn.dto.ViajeDTOe;
-import org.jcapitan.es.ivn.dto.ViajeDTOr;
+import org.jcapitan.es.ivn.dto.UsuariosPaginadoDTO;
 import org.jcapitan.es.ivn.mappers.UsuarioMappers;
-import org.jcapitan.es.ivn.mappers.ViajeMappers;
 import org.jcapitan.es.ivn.model.Usuario;
-import org.jcapitan.es.ivn.model.Viaje;
 import org.jcapitan.es.ivn.services.UsuarioService;
 
 
@@ -72,6 +71,24 @@ public class UsuarioController {
 	}
 	
 	@GET
+	@Path("Last")
+	@Transactional
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<UsuarioDTO> viajeLast(){
+		List<Usuario> usuarios = usuarioService.getAllUsers();
+		int numUsuarios = usuarios.size();
+		List<Usuario> lastUsuarios = new ArrayList<Usuario>();
+		if (numUsuarios > 0 ) lastUsuarios.add(usuarios.get(numUsuarios-1));
+		if (numUsuarios > 1 ) lastUsuarios.add(usuarios.get(numUsuarios-2));
+		if (numUsuarios > 2 ) lastUsuarios.add(usuarios.get(numUsuarios-3));
+		if (numUsuarios > 3 ) lastUsuarios.add(usuarios.get(numUsuarios-4));
+
+		List<UsuarioDTO> usuariosDTO = lastUsuarios.stream().map( usu -> UsuarioMappers.usuarioTOUsuarioDto(usu)).collect(Collectors.toList());
+		return  usuariosDTO;
+	}
+	
+	
+	@GET
 	@Path("Sort")
 	@Transactional
 	@Produces(MediaType.APPLICATION_JSON)
@@ -92,6 +109,31 @@ public class UsuarioController {
 		usuariosDTO = usuarios.stream().map(usu -> UsuarioMappers.usuarioTOUsuarioDto(usu)).collect(Collectors.toList());
 		return usuariosDTO; 
 	}
+	
+	@GET
+	@Path("Admin/Pagination")
+	@Transactional
+	@Produces(MediaType.APPLICATION_JSON)
+	public UsuariosPaginadoDTO usuarioAdminAllPage(@QueryParam("page") @DefaultValue("0") int pageIndex){
+		
+        int pageSize = 3;
+		
+		List<Usuario> usuarios = usuarioService.usuarioAllPage(pageIndex,pageSize);
+		List<UsuarioDTO> usuarioDTO = usuarios.stream().map( usu -> UsuarioMappers.usuarioTOUsuarioDto(usu)).collect(Collectors.toList());
+	
+		UsuariosPaginadoDTO usuariosPaginadoDTO = new UsuariosPaginadoDTO(usuarioDTO, Usuario.count("us_rol","admin"));
+		
+		return  usuariosPaginadoDTO;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	@GET
 	@Path("{id}")

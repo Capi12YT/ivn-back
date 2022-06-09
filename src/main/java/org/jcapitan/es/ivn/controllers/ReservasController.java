@@ -8,16 +8,23 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.jcapitan.es.ivn.dto.AcontecimientoDTO;
+import org.jcapitan.es.ivn.dto.AcontecimientoPaginadoDTO;
 import org.jcapitan.es.ivn.dto.ReservaDTO;
+import org.jcapitan.es.ivn.dto.ReservaPaginadoDTO;
+import org.jcapitan.es.ivn.mappers.AcontecimientoMappers;
 import org.jcapitan.es.ivn.mappers.ReservaMappers;
+import org.jcapitan.es.ivn.model.Acontecimiento;
 import org.jcapitan.es.ivn.model.Reserva;
 import org.jcapitan.es.ivn.services.ReservaService;
 
@@ -36,6 +43,26 @@ public class ReservasController {
 		reservaDTO = reservas.stream().map( rs -> ReservaMappers.reservaToReservaDTO(rs)).collect(Collectors.toList());
 		return reservaDTO;
 	}
+	
+	
+	@GET
+	@Path("Pagination")
+	@Transactional
+	@Produces(MediaType.APPLICATION_JSON)
+	public ReservaPaginadoDTO acontecimientoAllPage(@QueryParam("page") @DefaultValue("0") int pageIndex){
+		
+        int pageSize = 3;
+		
+		List<Reserva> reservas = reservaService.reservaAllPage(pageIndex,pageSize);
+		List<ReservaDTO> reservaDTO = reservas.stream().map( rs -> ReservaMappers.reservaToReservaDTO(rs)).collect(Collectors.toList());
+	
+		ReservaPaginadoDTO reservaPaginadoDTO = new ReservaPaginadoDTO(reservaDTO, Reserva.count());
+		
+		return  reservaPaginadoDTO;
+	}
+	
+	
+	
 	
 	@GET
 	@Path("Num/{userId}")

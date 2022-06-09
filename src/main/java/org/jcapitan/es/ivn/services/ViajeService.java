@@ -13,6 +13,7 @@ import org.jcapitan.es.ivn.model.Reserva;
 import org.jcapitan.es.ivn.model.Viaje;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import io.quarkus.panache.common.Page;
 
 @ApplicationScoped
 
@@ -32,6 +33,20 @@ public class ViajeService implements PanacheRepository<Viaje> {
 
 	public List<Viaje> viajeAll(){
 		return Viaje.listAll();
+	}
+	
+	public List<Viaje> viajeAllPage(Integer pageIndex,Integer pageSize){
+		
+		List<Viaje> viajes = Viaje.listAll();
+		int numItems = viajes.size();
+		int from = (pageIndex-1) * pageSize;
+		int to = pageIndex * pageSize;
+		if (from > numItems - 1) from = numItems - 1;
+		if (to > numItems - 1) to = numItems;
+		
+		List<Viaje> subViajes  = viajes.subList(from , to);
+		
+		return subViajes;
 	}
 
 	public boolean deleteViaje(Long id) {
