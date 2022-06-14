@@ -14,11 +14,13 @@ import io.quarkus.hibernate.orm.panache.PanacheRepository;
 @ApplicationScoped
 public class AcontecimientoService implements PanacheRepository<Acontecimiento> {
 
+	//metodo devolver todos los acontecimientos
 	public List<Acontecimiento> getAll(){
 		
 		return Acontecimiento.listAll();
 	}
 	
+	//metodo crear acontecimiento
 	public boolean createAcon(AcontecimientoDTO acontecimientoDTO) {
 		
 		Acontecimiento aco = AcontecimientoMappers.acontecimientoDTOtoAcontecimiento(acontecimientoDTO);
@@ -27,10 +29,13 @@ public class AcontecimientoService implements PanacheRepository<Acontecimiento> 
 		
 	}
 	
+	//metodo borrar un acontecimiento
 	public boolean deleteAcon(Long id) {
 		return Acontecimiento.deleteById(id);
 	}
 
+	
+	//metodo acontecimiento paginado
 	public List<Acontecimiento> acontecimientoAllPage(int pageIndex, int pageSize) {
 		
 		List<Acontecimiento> acontecimientos = Acontecimiento.listAll();

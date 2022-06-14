@@ -18,7 +18,7 @@ import io.quarkus.panache.common.Page;
 @ApplicationScoped
 
 public class ViajeService implements PanacheRepository<Viaje> {
-
+	//metodo crear viaje
 	public boolean createViaje(ViajeDTO viajeDTO) {
 		Viaje vj = ViajeMappers.ViajeDtoToViaje(viajeDTO);
 		
@@ -35,6 +35,7 @@ public class ViajeService implements PanacheRepository<Viaje> {
 		return Viaje.listAll();
 	}
 	
+	//metodo devolver viajes paginados
 	public List<Viaje> viajeAllPage(Integer pageIndex,Integer pageSize){
 		
 		List<Viaje> viajes = Viaje.listAll();
@@ -48,7 +49,8 @@ public class ViajeService implements PanacheRepository<Viaje> {
 		
 		return subViajes;
 	}
-
+	
+	//metodo borrar viaje
 	public boolean deleteViaje(Long id) {
 		Viaje viaje = Viaje.findById(id);
 		
@@ -65,17 +67,19 @@ public class ViajeService implements PanacheRepository<Viaje> {
 		}
 	}
 
+	//metodo buscar viaje por id
 	public Viaje viajeById(Long id) {
 		return Viaje.findById(id);
 	}
 
+	//metodo actualizar viaje
 	public boolean updateViaje(ViajeDTOe viajeDTO) {
 		Viaje viajeBD = Viaje.findById(viajeDTO.getId());
 		viajeBD.id=viajeDTO.getId();
 		viajeBD.acontecimiento=viajeDTO.getId_acontecimiento();
 		viajeBD.vi_description=viajeDTO.getDescription();
 		viajeBD.vi_estado=viajeDTO.isEstado();
-		viajeBD.vi_img=viajeDTO.getImg();
+		if(!viajeDTO.getImg().isEmpty())viajeBD.vi_img=viajeDTO.getImg();
 		viajeBD.vi_location=viajeDTO.getLocation();
 		viajeBD.vi_name=viajeDTO.getName();
 		viajeBD.vi_price=viajeDTO.getPrice();
@@ -83,6 +87,7 @@ public class ViajeService implements PanacheRepository<Viaje> {
 		return true;
 	}
 	
+	//metodo de filtrado de viaje por nombre,lozalizacion y estado
 	public List<Viaje> viajeFiltre(FiltroViajeDTO filtroViajeDTO){
 		
 		List<Viaje> viajes = viajeFiltreAcontecimiento(filtroViajeDTO.getAcontecimiento());
@@ -96,6 +101,7 @@ public class ViajeService implements PanacheRepository<Viaje> {
 		return viajesFiltrados;
 	}
 
+	//metodo de filtrado de viaje por acontecimiento
 	public List<Viaje> viajeFiltreAcontecimiento(String acontecimiento) {
 		List<Viaje> viajes = Viaje.listAll();
 		List<Viaje> viajesFiltrados = viajes.stream()

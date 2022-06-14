@@ -13,10 +13,12 @@ import io.quarkus.hibernate.orm.panache.PanacheRepository;
 @ApplicationScoped
 public class ReservaService implements PanacheRepository<Reserva> {
 
+	//metodo devolver todas las reservas
 	public List<Reserva> reservaAll(){
 		return Reserva.listAll();
 	}
 
+	//metodo crear reserva
 	public boolean createReserva(Reserva reserva) {
 		Reserva reservaFind = Reserva.find("usuario_id = ?1 and viaje_id = ?2", reserva.usuario.id, reserva.viaje.id).firstResult();
 		if(reservaFind == null) {
@@ -32,6 +34,7 @@ public class ReservaService implements PanacheRepository<Reserva> {
 		return false;
 	}
 
+	//metodo borrar reserva de un usuario
 	public boolean deleteReserva(Long userId) {
 		if (Reserva.delete("id", userId)>0) {
 			return true;
@@ -39,6 +42,7 @@ public class ReservaService implements PanacheRepository<Reserva> {
 		return false;
 	}
 	
+	//metodo borrar todas las reservas de un usuario
 	public long deleteAllReserva(Long userId) {
 		List<Reserva> reservasByUser = Reserva.list("usuario_id", userId);
 		reservasByUser.forEach(reserva -> {
@@ -50,6 +54,7 @@ public class ReservaService implements PanacheRepository<Reserva> {
 
 	}
 
+	//metodo reservas paginadas
 	public List<Reserva> reservaAllPage(int pageIndex, int pageSize) {
 		List<Reserva> reservas = Reserva.listAll();
 		int numItems = reservas.size();

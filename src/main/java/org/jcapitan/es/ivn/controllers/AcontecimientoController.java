@@ -30,13 +30,16 @@ import org.jcapitan.es.ivn.model.Reserva;
 import org.jcapitan.es.ivn.model.Viaje;
 import org.jcapitan.es.ivn.services.AcontecimientoService;
 
+//declaracion de url del endpoint
 @Path("/api/Acontecimiento")
 public class AcontecimientoController {
+	
+	//injeccion del servicio acontecimiento
 	@Inject
 	AcontecimientoService acontecimientoService;
 	
 	
-	
+	//endpoint devolver todos los acontecimientos
 	@GET
 	@Path("All")
     @Produces(MediaType.APPLICATION_JSON)
@@ -50,7 +53,7 @@ public class AcontecimientoController {
 		return acontecimientoDTO;
 	}
 	
-	
+	//endpoint acontecimientos paginados
 	@GET
 	@Path("Pagination")
 	@Transactional
@@ -68,10 +71,7 @@ public class AcontecimientoController {
 	}
 	
 	
-	
-	
-	
-	
+	//endpoint crear acontecimiento
 	@POST
 	@Path("Create")
 	@Transactional
@@ -81,6 +81,9 @@ public class AcontecimientoController {
 		return Response.ok("Acontecimiento creado").status(201).build();
 		
 	}
+	
+	
+	//endpoint borrar acontecimiento
 	@DELETE
 	@Path("Delete/{id}")
 	@Transactional

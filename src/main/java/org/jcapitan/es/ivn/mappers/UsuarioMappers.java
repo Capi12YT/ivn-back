@@ -5,7 +5,7 @@ import org.jcapitan.es.ivn.model.Usuario;
 
 public class UsuarioMappers {
 
-	
+	//metodo para mapear UsuarioDTO mediante Usuario(log in)
 	public static UsuarioDTO usuarioToUsuarioDTO(Usuario usuario) {
 		UsuarioDTO usuarioDto = new UsuarioDTO();
 		usuarioDto.setEmail(usuario.us_email);
@@ -13,6 +13,7 @@ public class UsuarioMappers {
 		return usuarioDto;
 	}
 	
+	//metodo para mapear Usuario mediante UsuarioDTO
 	public static Usuario usuariodtoTOUsuario(UsuarioDTO usuarioDTO) {
 		Usuario usuario = new Usuario();
 		usuario.us_email = usuarioDTO.getEmail();
@@ -23,6 +24,7 @@ public class UsuarioMappers {
 		return usuario;
 	}
 	
+	//metodo para mapear UsuarioDTO mediante Usuario
 	public static UsuarioDTO usuarioTOUsuarioDto(Usuario usuario) {
 		UsuarioDTO usuarioDTO = new UsuarioDTO();
 		usuarioDTO.setId(usuario.id);

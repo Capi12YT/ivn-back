@@ -14,6 +14,7 @@ import net.bytebuddy.description.method.MethodDescription.TypeToken;
 
 public class AcontecimientoMappers {
 	
+	//metodo para mapear Acontecimiento mediante AcontecimientoDTO
 	public static Acontecimiento acontecimientoDTOtoAcontecimiento(AcontecimientoDTO acontecimientoDTO) {
 		
 		Acontecimiento acontecimiento = new Acontecimiento();
@@ -24,6 +25,7 @@ public class AcontecimientoMappers {
 		return acontecimiento;
 	}
 	
+	//metodo para mapear AcontecimientoDTO mediante Acontecimiento
 	public static AcontecimientoDTO acontecimientoToAcontecimientoDTO(Acontecimiento acontecimiento) {
 		AcontecimientoDTO acontecimientoDTO = new AcontecimientoDTO();
 		acontecimientoDTO.setId(acontecimiento.id);
@@ -34,12 +36,6 @@ public class AcontecimientoMappers {
 	}
 	
 	
-	
-	/*@Mapper(componentModel = "cdi")
-	public interface AcontecimientoMapper {
-	    @Mapping(target = "name", source = "ev_acont_name")
-	    @Mapping(target = "name", source = "ev_acont_name")
-	    AcontecimientoDTO toResource(Acontecimiento acontecimiento);
-	}*/
+
 	
 }

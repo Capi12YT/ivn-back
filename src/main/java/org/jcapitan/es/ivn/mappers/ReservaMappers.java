@@ -5,6 +5,7 @@ import org.jcapitan.es.ivn.model.Reserva;
 
 public class ReservaMappers {
 	
+	//metodo para mapear reservaDTO mediante Reserva
 	public static ReservaDTO reservaToReservaDTO(Reserva reserva) {
 		ReservaDTO reservaDTO = new ReservaDTO();
 		
@@ -19,6 +20,7 @@ public class ReservaMappers {
 		return reservaDTO;
 	}
 	
+	//metodo para mapear Reserva mediante ReservaDTO
 	public static Reserva reservaDTOtoReserva(ReservaDTO reservaDTO) {
 		Reserva reserva =  new Reserva();
 		

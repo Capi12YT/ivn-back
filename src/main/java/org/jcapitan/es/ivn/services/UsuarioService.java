@@ -20,9 +20,10 @@ import io.quarkus.panache.common.Sort;
 @ApplicationScoped
 public class UsuarioService implements PanacheRepository<Usuario> {
 	
+	//firma de token
 	final String SECRET_KEY = "12321"; 
 
-	
+	//metodo para generar token
 	public String getToken(Usuario usuario) {
 		JwtBuilder builder = Jwts.builder().setIssuedAt(new Date())
 				.setIssuer("IVN")
@@ -36,20 +37,8 @@ public class UsuarioService implements PanacheRepository<Usuario> {
 		return builder.compact();
 	}
 	
-	public boolean validarToken(String token) {
-		Claims claims = null;
-		try {
-			claims = Jwts.parser()
-					.setSigningKey(SECRET_KEY)
-					.parseClaimsJws(token).getBody();
-		} catch (Exception e) {
-			return false;
-		}
-		
-		if (claims == null || claims.isEmpty()) { return false; }
-		return true;
-	}
-	
+
+	//metodo crear usuario
 	public boolean createUsuario(UsuarioDTO usuDTO) {
 		Usuario usu = UsuarioMappers.usuariodtoTOUsuario(usuDTO);
 		String password = usu.us_password;
@@ -62,6 +51,7 @@ public class UsuarioService implements PanacheRepository<Usuario> {
 		return false;
 	}
 	
+	//metodo para validar contraseña de usuario
 	public boolean validarPassword(UsuarioDTO usuarioDTO) {
 		Usuario usuario = Usuario.find("us_email", usuarioDTO.getEmail()).firstResult();
 		if (usuario != null) {
@@ -72,25 +62,32 @@ public class UsuarioService implements PanacheRepository<Usuario> {
 		return false;
 	}
 	
+	//metodo para devolver todo los usuarios
 	public List<Usuario> getAllUsers(){
 		return Usuario.listAll();
 	}
 	
+	//metodo para borrar usuario por id
 	public boolean deleteUser(Long id) {
 		return 	Usuario.deleteById(id);
 	}
+	
+	//metodo para ordenar usuario de forma descendente por id
 	public List<Usuario> getSortUsers(){
 		return Usuario.listAll(Sort.descending("id"));
 	}
+	
+	//metodo devolver usuarios admin
 	public List<Usuario> getSortAdmins(){
 		return Usuario.list("us_rol","admin");
 	}
 
+	//metodo buscar usuario por id
 	public Usuario usuarioById(Long id) {
-		// TODO Auto-generated method stub
 		return Usuario.findById(id);
 	}
 
+	//metodo actualizar usuario
 	public boolean updateUsuario(UsuarioDTO usuarioDTO) {
 		Usuario usuarioBD = Usuario.findById(usuarioDTO.getId());
 		usuarioBD.id=usuarioDTO.getId();
@@ -102,6 +99,7 @@ public class UsuarioService implements PanacheRepository<Usuario> {
 		return true;
 	}
 
+	//metodo paginado de usuario
 	public List<Usuario> usuarioAllPage(int pageIndex, int pageSize) {
 		List<Usuario> usuarios = getSortAdmins();
 		int numItems = usuarios.size();

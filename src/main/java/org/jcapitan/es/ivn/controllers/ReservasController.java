@@ -28,12 +28,15 @@ import org.jcapitan.es.ivn.model.Acontecimiento;
 import org.jcapitan.es.ivn.model.Reserva;
 import org.jcapitan.es.ivn.services.ReservaService;
 
-
+//declaracion de url del endpoint
 @Path("/api/Reserva")
 public class ReservasController {
+	
+	//injeccion del servicio reserva
 	@Inject
 	ReservaService reservaService;
 	
+	//endpoint devolver todas las reservas
 	@GET
 	@Path("All")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -44,7 +47,7 @@ public class ReservasController {
 		return reservaDTO;
 	}
 	
-	
+	//endpoint reservas paginadas
 	@GET
 	@Path("Pagination")
 	@Transactional
@@ -62,8 +65,7 @@ public class ReservasController {
 	}
 	
 	
-	
-	
+	//endpoint numero de reservas de un usuario
 	@GET
 	@Path("Num/{userId}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -73,6 +75,7 @@ public class ReservasController {
 		return reservas.size();
 	}
 	
+	//endpoint todas las reservas de un usuario
 	@GET
 	@Path("All/{userId}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -84,7 +87,7 @@ public class ReservasController {
 		return reservaDTO;
 	}
 	
-	
+	//endpoint crear reserva de un usuario
 	@POST
 	@Path("Create")
 	@Transactional
@@ -97,6 +100,7 @@ public class ReservasController {
 		
 	}
 	
+	//endpoint eliminar reserva de un usuario
 	@DELETE
 	@Path("Delete/{reservaId}")
 	@Transactional
@@ -108,6 +112,7 @@ public class ReservasController {
 		return Response.ok(done?"Reserva borrada:"+ reservas.size():"Reserva no borrada").status(done?201:200).build();
 	}
 	
+	//endpoint eliminar todas las reservas de un usuairo
 	@DELETE
 	@Path("All/Delete/{userId}")
 	@Transactional

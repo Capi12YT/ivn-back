@@ -1,8 +1,0 @@
-quarkus.datasource.db-kind=postgresql 
-quarkus.datasource.username=shtnavegjungsf
-quarkus.datasource.password=4e6e76563f44479e34b0adf7b19714a46f4ec5cf5665692820b8807ceed87232
-quarkus.datasource.jdbc.url=jdbc:postgresql://ec2-52-86-115-245.compute-1.amazonaws.com:5432/ddjv28lnu4or6g
-quarkus.hibernate-orm.database.generation=update
-quarkus.hibernate-orm.sql-load-script=import.sql
-
-quarkus.http.port=${PORT:8080}

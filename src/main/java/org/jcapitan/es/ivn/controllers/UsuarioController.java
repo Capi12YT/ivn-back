@@ -26,14 +26,15 @@ import org.jcapitan.es.ivn.mappers.UsuarioMappers;
 import org.jcapitan.es.ivn.model.Usuario;
 import org.jcapitan.es.ivn.services.UsuarioService;
 
-
+//declaracion de url del endpoint
 @Path("/api/Users")
 public class UsuarioController {
 
+	//injeccion del servicio usuario
 	@Inject
 	UsuarioService usuarioService;
 	
-	//token
+	//endpoint login
 	@POST
 	@Path("Login")
 	@Transactional
@@ -47,6 +48,7 @@ public class UsuarioController {
 		
 	}
 	
+	//endpoint crear usuario
 	@POST
 	@Path("Create")
 	@Transactional
@@ -59,6 +61,7 @@ public class UsuarioController {
 		
 	}
 	
+	//endpoint devolver todos los usuarios
 	@GET
 	@Path("All")
 	@Transactional
@@ -70,6 +73,7 @@ public class UsuarioController {
 		return usuariosDTO; 
 	}
 	
+	//endpoint devolver los 4 ultimos usuarios registrados
 	@GET
 	@Path("Last")
 	@Transactional
@@ -87,7 +91,7 @@ public class UsuarioController {
 		return  usuariosDTO;
 	}
 	
-	
+	//endpoint ordenado de forma descendente por id
 	@GET
 	@Path("Sort")
 	@Transactional
@@ -99,6 +103,7 @@ public class UsuarioController {
 		return usuariosDTO; 
 	}
 	
+	//endpoint devolver usuarios admin
 	@GET
 	@Path("Admin")
 	@Transactional
@@ -110,6 +115,7 @@ public class UsuarioController {
 		return usuariosDTO; 
 	}
 	
+	//endpoint devolver usuarios admin paginados
 	@GET
 	@Path("Admin/Pagination")
 	@Transactional

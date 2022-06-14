@@ -16,7 +16,7 @@ import org.jcapitan.es.ivn.model.Viaje;
 @ApplicationScoped
 public class ContadorService {
 
-	
+	//metodo para retornar el numero de registros de cada tabla
 	public Map<String, Long> getContadores(){
 		Map<String, Long> map = new HashMap<String, Long>();
         map.put("Usuarios", Usuario.count());

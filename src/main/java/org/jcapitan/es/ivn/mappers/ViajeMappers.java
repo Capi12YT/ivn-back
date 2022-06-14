@@ -12,6 +12,7 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 public class ViajeMappers{
 
+	//metodo para mapear un Viaje mediante un ViajeDTO
 	public static Viaje ViajeDtoToViaje(ViajeDTO viajeDTO) {
 		Viaje viaje = new Viaje();
 		viaje.vi_name = viajeDTO.getName();
@@ -24,6 +25,7 @@ public class ViajeMappers{
 		return viaje;
 	}
 	
+	//metodo para mapear un ViajeDTOr mediante un Viaje
 	public static ViajeDTOr viajeToViajeDTO(Viaje viaje) {
 		ViajeDTOr viajeDTOr = new ViajeDTOr();
 
@@ -40,6 +42,8 @@ public class ViajeMappers{
 		viajeDTOr.setImg(viaje.vi_img);
 		return viajeDTOr;
 	}
+	
+	//metodo mapear un Viaje mediante un ViajeDTOe
 	public static Viaje ViajeDtoeToViaje(ViajeDTOe viajeDTO) {
 		Viaje viaje = new Viaje();
 		

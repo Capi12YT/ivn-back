@@ -1,5 +1,6 @@
 package org.jcapitan.es.ivn.model;
 
+//clase Contadores
 public class Contadores {
 	
 	private int usuarios;

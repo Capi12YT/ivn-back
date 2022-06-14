@@ -31,14 +31,14 @@ import org.jcapitan.es.ivn.services.ViajeService;
 
 import io.quarkus.panache.common.Page;
 
-
+//declaracion de url del endpoint
 @Path("/api/Viaje")
 public class ViajeController {
 	   
 		@Inject
 		ViajeService viajeService;
 		
-		
+		//endpoint crear viaje
 		@POST
 		@Path("Create")
 		@Transactional
@@ -51,7 +51,7 @@ public class ViajeController {
 			
 		}
 		
-		
+		//endpoint devolver todos los viajes
 		@GET
 		@Path("All")
 		@Transactional
@@ -64,7 +64,7 @@ public class ViajeController {
 		}
 		
 		
-		
+		//endpoint devolver viajes paginados
 		@GET
 		@Path("Pagination")
 		@Transactional
@@ -82,7 +82,7 @@ public class ViajeController {
 		}
 		
 
-		
+		//endpoint devolver los ultimos 3 viajes
 		@GET
 		@Path("Last")
 		@Transactional
@@ -99,6 +99,8 @@ public class ViajeController {
 			return  viajeDTOr;
 		}
 		
+		
+		//endpoint borrar viaje
 		@DELETE
 		@Path("Delete/{id}")
 		@Transactional
@@ -107,6 +109,7 @@ public class ViajeController {
 			return Response.ok(done?"Viaje borrado":"Viaje no existe").status(done?200:205).build();
 		}
 		
+		//endpoint modificar viaje
 		@PUT
 		@Path("Update")
 		@Transactional
@@ -116,6 +119,7 @@ public class ViajeController {
 			return Response.ok(done?"Viaje actualizado":"Viaje no actualizado").status(done?200:204).build();
 		}
 		
+		//endpoint buscar viaje
 		@GET
 		@Path("{id}")
 		@Transactional
@@ -126,6 +130,7 @@ public class ViajeController {
 			return  viajeDTOr;
 		}
 		
+		//endpoint filtrar viajes(nombre,ubicacion,estado) 
 		@POST
 		@Path("Filter")
 		@Transactional
@@ -137,6 +142,7 @@ public class ViajeController {
 			return  viajeDTOr;
 		}
 		
+		//endpoint filtrar viajes por acontecimiento
 		@POST
 		@Path("Filter/Acontecimiento")
 		@Transactional
